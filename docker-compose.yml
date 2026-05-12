@@ -1,0 +1,12 @@
+services:
+  webserver:
+    container_name: aegis-fsrs
+    image: joseluisq/static-web-server:2
+    restart: unless-stopped
+    volumes:
+      - dist:/public
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.rpgsoundboard.rule=Host(`example.com`)
+      - traefik.http.routers.rpgsoundboard.entrypoints=websecure
+      - traefik.http.services.rpgsoundboard.loadbalancer.server.port=80
