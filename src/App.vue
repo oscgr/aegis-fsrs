@@ -2,6 +2,7 @@
   <v-app>
     <AppBar />
     <v-main>
+      <KeyboardPlayground />
       <!--          <Soundboard /> -->
       <VersionChecker />
     </v-main>
@@ -11,6 +12,7 @@
 <script lang="ts" setup>
 import AppBar from '@/components/layout/AppBar.vue'
 import VersionChecker from '@/components/layout/VersionChecker.vue'
+import KeyboardPlayground from '@/components/playground/KeyboardPlayground.vue'
 </script>
 
 <style lang="css">

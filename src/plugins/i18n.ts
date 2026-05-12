@@ -14,6 +14,9 @@ const messages = {
     cancel: 'Cancel',
     toggleTheme: 'Toggle theme',
     linkToGithub: 'Link to source',
+    keyboardPlayground: {
+      title: 'Playground',
+    },
   },
   fr: {
     import: 'Importer la base de données...',
@@ -28,10 +31,14 @@ const messages = {
     cancel: 'Annuler',
     toggleTheme: 'Changer le thème',
     linkToGithub: 'Lien vers la source',
+    keyboardPlayground: {
+      title: 'Playground',
+    },
   },
 }
 
 export default createI18n({
+  legacy: false,
   locale: navigator.language?.slice(0, 2),
   fallbackLocale: 'en',
   messages,
