@@ -32,7 +32,7 @@ const { mobile } = useDisplay()
 
 onMounted(() => {
   setInterval(async() => {
-    if (!ignoreNewVersion.value && await verify())
+    if (!import.meta.env.DEV && !ignoreNewVersion.value && await verify())
       open()
   }, ONE_MIN)
 })
