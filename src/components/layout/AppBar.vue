@@ -59,30 +59,6 @@
             />
           </template>
           <v-list>
-            <v-list-item>
-              <v-slider
-                :key="`global-vol-slider-${mdAndUp ? 'not-mob' : 'mob'}`"
-                class="mx-4"
-                density="compact"
-                hide-details
-                :max="1"
-                :min="0"
-                :step="0.001"
-                :width="mdAndUp ? 180 : ''"
-              >
-                <template #prepend>
-                  <v-btn
-                    v-tooltip:top="{ openDelay: 200, text: t('globalMute') }"
-                    :aria-label="t('globalMute')"
-                    density="comfortable"
-                    :icon="isGloballyMuted ? mdiVolumeOff : mdiVolumeHigh"
-                    variant="text"
-                    @click="toggleGlobalMute"
-                  />
-                </template>
-              </v-slider>
-            </v-list-item>
-            <v-divider />
             <v-list-item
               :append-icon="theme.current.value.dark ? mdiMoonWaningCrescent : mdiWeatherSunny"
               :title="t('toggleTheme')"
@@ -143,8 +119,6 @@ import {
   mdiImport,
   mdiMenu,
   mdiMoonWaningCrescent,
-  mdiVolumeHigh,
-  mdiVolumeOff,
   mdiWeatherSunny,
 } from '@mdi/js'
 
