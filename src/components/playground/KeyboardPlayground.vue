@@ -21,22 +21,13 @@
             </v-row>
           </v-card-text>
           <v-card-actions>
-            <v-row>
-              <v-col
+            <div class="d-flex flex-wrap ga-2">
+              <KeyboardPlaygroundBuildingHistoryCard
                 v-for="historyEntry in historyBuilding"
                 :key="historyEntry.name"
-                cols="3"
-                class="d-flex justify-center"
-              >
-                <v-card
-                  class="d-flex align-center flex-column"
-                  variant="outlined"
-                >
-                  <v-img aspect-ratio="1" width="96px" :src="historyEntry.icon" />
-                  <span class="text-grey-lighten-1" style="font-size: smaller" v-text="historyEntry.name" />
-                </v-card>
-              </v-col>
-            </v-row>
+                :history-entry="historyEntry"
+              />
+            </div>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -50,6 +41,7 @@ import { onKeyStroke, useMagicKeys } from '@vueuse/core'
 import { chunk, isNumber } from 'es-toolkit'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import KeyboardPlaygroundBuildingHistoryCard from '@/components/playground/KeyboardPlaygroundBuildingHistoryCard.vue'
 import KeyboardPlaygroundKey from '@/components/playground/KeyboardPlaygroundKey.vue'
 import Buildings from '@/constants/buildings.ts'
 import { KeyboardLayouts } from '@/constants/keyboards.ts'
@@ -74,10 +66,8 @@ const keyStrokeHandler = (e: KeyboardEvent) => {
     currentKey.value = keyPressed
     return // First time pressing
   }
-  console.log(`${currentKey.value}:${keyPressed}`)
-  const selectedBuilding = Buildings.find(b => b.shortcut === `${currentKey.value}:${keyPressed}`)
+  const selectedBuilding = Buildings.find(b => b.shortcut[0] === currentKey.value && b.shortcut[1] === keyPressed)
   if (selectedBuilding) {
-    console.log(selectedBuilding)
     currentKey.value = null
     historyBuilding.value.push(selectedBuilding)
   } else {
@@ -87,7 +77,3 @@ const keyStrokeHandler = (e: KeyboardEvent) => {
 
 onKeyStroke(KeyboardLayouts.AZERTY, keyStrokeHandler, { passive: true, dedupe: true })
 </script>
-
-<style scoped lang="css">
-
-</style>
