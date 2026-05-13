@@ -1,14 +1,34 @@
+import type { KeyboardLayout } from '@/store/db.ts'
+
 export const KeyboardLayouts = {
-  // QWERTY: [
-  //   ['q', 'w', 'e', 'r'],
-  //   ['a', 's', 'd', 'f'],
-  //   ['z', 'x', 'c', 'v'],
-  // ],
-  // QWERTZ: [
-  //   ['q', 'w', 'e', 'r'],
-  //   ['a', 's', 'd', 'f'],
-  //   ['y', 'x', 'c', 'v'],
-  // ],
+  QWERTY: [
+    'q',
+    'w',
+    'e',
+    'r',
+    'a',
+    's',
+    'd',
+    'f',
+    'z',
+    'x',
+    'c',
+    'v',
+  ],
+  QWERTZ: [
+    'q',
+    'w',
+    'e',
+    'r',
+    'a',
+    's',
+    'd',
+    'f',
+    'y',
+    'x',
+    'c',
+    'v',
+  ],
   AZERTY: [
     'a',
     'z',
@@ -23,9 +43,18 @@ export const KeyboardLayouts = {
     'c',
     'v',
   ],
-  // DVORAK: [
-  //   ['\'', ',', '.', 'p'],
-  //   ['a', 'o', 'e', 'u'],
-  //   [';', 'q', 'j', 'k'],
-  // ],
-}
+  DVORAK: [
+    '\'',
+    ',',
+    '.',
+    'p',
+    'a',
+    'o',
+    'e',
+    'u',
+    ';',
+    'q',
+    'j',
+    'k',
+  ],
+} satisfies Record<string, KeyboardLayout['content']>
