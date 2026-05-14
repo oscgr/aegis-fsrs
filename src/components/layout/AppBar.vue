@@ -35,7 +35,12 @@
               :title="t('linkToGithub')"
             />
             <v-divider />
-            <v-list-item :append-icon="mdiKeyboardSettings" :title="t('keyboardLayouts.menuOptionTitle')" :subtitle="t('keyboardLayouts.menuOptionSubtitle', [currentKeyboardLayout?.name])" />
+            <v-list-item
+              :append-icon="mdiKeyboardSettings"
+              :title="t('options.menuTitle')"
+              :subtitle="t('options.menuSubtitle', [currentKeyboardLayout?.name])"
+              @click="optionsDialog?.open()"
+            />
             <v-divider />
             <v-list-item :append-icon="mdiImport" :title="t('import')" @click="importData()" />
             <v-list-item :append-icon="mdiExport" :title="t('export')" @click="exportData()" />
@@ -67,13 +72,19 @@
             />
           </template>
           <v-list density="compact">
-            <v-list-item :append-icon="mdiKeyboardSettings" :title="t('keyboardLayouts.menuOptionTitle')" :subtitle="t('keyboardLayouts.menuOptionSubtitle', [currentKeyboardLayout?.name])" />
+            <v-list-item
+              :append-icon="mdiKeyboardSettings"
+              :title="t('options.menuTitle')"
+              :subtitle="t('options.menuSubtitle', [currentKeyboardLayout?.name])"
+              @click="optionsDialog?.open()"
+            />
             <v-divider />
             <v-list-item :append-icon="mdiImport" :title="t('import')" @click="importData()" />
             <v-list-item :append-icon="mdiExport" :title="t('export')" @click="exportData()" />
           </v-list>
         </v-menu>
       </v-col>
+      <OptionsDialog ref="optionsDialog" />
     </v-row>
   </v-app-bar>
 </template>
@@ -90,11 +101,14 @@ import {
   mdiMoonWaningCrescent,
   mdiWeatherSunny,
 } from '@mdi/js'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay, useTheme } from 'vuetify/framework'
+import OptionsDialog from '@/components/layout/OptionsDialog.vue'
 import useDB from '@/store/db.ts'
 import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
+
+const optionsDialog = ref<InstanceType<typeof OptionsDialog>>()
 
 const theme = useTheme()
 const { mdAndUp, smAndDown } = useDisplay()

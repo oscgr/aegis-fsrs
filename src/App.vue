@@ -2,7 +2,8 @@
   <v-app>
     <AppBar />
     <v-main>
-      <KeyboardPlayground />
+      <!-- :key to force re-render, because of keystroke listener -->
+      <KeyboardPlayground :key="currentKeyboardLayout?.id" />
       <VersionChecker />
     </v-main>
   </v-app>
@@ -12,6 +13,9 @@
 import AppBar from '@/components/layout/AppBar.vue'
 import VersionChecker from '@/components/layout/VersionChecker.vue'
 import KeyboardPlayground from '@/components/playground/KeyboardPlayground.vue'
+import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
+
+const { currentKeyboardLayout } = useKeyboardLayoutsStore()
 </script>
 
 <style lang="css">
