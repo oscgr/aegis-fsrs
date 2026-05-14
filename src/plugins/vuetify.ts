@@ -32,7 +32,28 @@ export default createVuetify({
     VFileUpload,
   },
   theme: {
-    defaultTheme: 'system',
+    defaultTheme: 'dark',
+    themes: {
+      dark: {
+        colors: {
+          background: '#14263a',
+          surface: '#223951',
+          // 'surface-bright': '#354250',
+          // 'surface-light': '#EEEEEE',
+          // 'surface-variant': '#424242',
+          // 'on-surface-variant': '#EEEEEE',
+          primary: '#c39b53',
+          // 'primary-darken-1': '#1F5592',
+          secondary: '#48A9A6',
+          // 'secondary-darken-1': '#018786',
+          error: '#B00020',
+          info: '#FB8C00',
+          // 'success': '#4CAF50',
+          // 'warning': '#FB8C00',
+        },
+
+      },
+    },
   },
   icons: {
     defaultSet: 'mdi',

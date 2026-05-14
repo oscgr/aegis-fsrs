@@ -18,7 +18,12 @@
       <!--        :src="`@/assets/icons/flags/${props.historyEntry.group.toLowerCase()}.png`" -->
       <!--      /> -->
       <div class="text-body-small" v-text="historyEntry.name" />
-      <div class="text-body-small" v-text="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])" />
+      <v-hotkey
+        color="primary"
+        :keys="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])"
+        variant="elevated"
+        platform="mac"
+      />
     </v-card-text>
   </v-card>
 </template>

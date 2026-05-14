@@ -24,11 +24,6 @@
           </template>
           <v-list>
             <v-list-item
-              :append-icon="theme.current.value.dark ? mdiMoonWaningCrescent : mdiWeatherSunny"
-              :title="t('toggleTheme')"
-              @click="theme.toggle(['light', 'dark'])"
-            />
-            <v-list-item
               :append-icon="mdiGithub"
               href="https://github.com/oscgr/aegis-fsrs"
               target="_blank"
@@ -48,13 +43,6 @@
         </v-bottom-sheet>
       </v-col>
       <v-col class="d-none d-md-flex justify-end align-center pr-4" cols="3">
-        <v-btn
-          v-tooltip:left="{ openDelay: 200, text: t('toggleTheme') }"
-          :aria-label="t('toggleTheme')"
-          :icon="theme.current.value.dark ? mdiMoonWaningCrescent : mdiWeatherSunny"
-          variant="flat"
-          @click="theme.toggle(['light', 'dark'])"
-        />
         <v-btn
           v-tooltip:left="{ openDelay: 200, text: t('linkToGithub') }"
           :aria-label="t('linkToGithub')"
@@ -98,19 +86,16 @@ import {
   mdiImport,
   mdiKeyboardSettings,
   mdiMenu,
-  mdiMoonWaningCrescent,
-  mdiWeatherSunny,
 } from '@mdi/js'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useDisplay, useTheme } from 'vuetify/framework'
+import { useDisplay } from 'vuetify/framework'
 import OptionsDialog from '@/components/layout/OptionsDialog.vue'
 import useDB from '@/store/db.ts'
 import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 
 const optionsDialog = ref<InstanceType<typeof OptionsDialog>>()
 
-const theme = useTheme()
 const { mdAndUp, smAndDown } = useDisplay()
 const { exportData, importData } = useDB()
 const { currentKeyboardLayout } = useKeyboardLayoutsStore()
