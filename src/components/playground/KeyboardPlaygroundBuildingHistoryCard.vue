@@ -2,15 +2,24 @@
   <v-card
     class="d-flex align-center flex-column"
     variant="tonal"
+    density="compact"
   >
-    <v-img
-      aspect-ratio="1"
-      width="96px"
-      transition="none"
-      :src="historyEntry.icon"
-    />
-    <span class="text-body-small" v-text="historyEntry.name" />
-    <span class="text-body-small" v-text="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])" />
+    <v-card-text class="d-flex flex-column align-center">
+      <v-img
+        aspect-ratio="1"
+        width="66px"
+        transition="none"
+        :src="historyEntry.icon"
+      />
+      <!--      <v-img -->
+      <!--        aspect-ratio="1" -->
+      <!--        width="66px" -->
+      <!--        transition="none" -->
+      <!--        :src="`@/assets/icons/flags/${props.historyEntry.group.toLowerCase()}.png`" -->
+      <!--      /> -->
+      <div class="text-body-small" v-text="historyEntry.name" />
+      <div class="text-body-small" v-text="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])" />
+    </v-card-text>
   </v-card>
 </template>
 

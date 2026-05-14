@@ -1,5 +1,6 @@
 import type { EntityTable } from 'dexie'
 import { Dexie } from 'dexie'
+import { BuildingCivGroup } from '@/constants/buildings.ts'
 import { KeyboardLayouts } from '@/constants/keyboards.ts'
 import FileUtils from '@/utils/FileUtils.ts'
 import 'dexie-export-import'
@@ -17,6 +18,9 @@ export type AppState = {
 } | {
   key: 'theme-dark'
   value: boolean
+} | {
+  key: 'current-civ-group'
+  value: BuildingCivGroup
 }
 
 const db = new Dexie('aegis-fsrs') as Dexie & {
@@ -33,12 +37,22 @@ db.on('populate', async() => {
   db.appState.bulkAdd([
     // { key: 'theme-dark', value: window.matchMedia('(prefers-color-scheme: dark)') },
     { key: 'current-keyboard-layout-id', value: 3 }, // todo
+    { key: 'current-civ-group', value: BuildingCivGroup.COMMON },
   ])
 })
 export { db }
 
 // --- composable
 function useDB() {
+  const getAppState = async(key: AppState['key']) => {
+    const current = await db.appState.get(key)
+    return current?.value
+  }
+
+  const patchAppState = async(key: AppState['key'], value: AppState['value']) => {
+    await db.appState.put({ key, value })
+  }
+
   async function exportData() {
     const blob = await db.export({ prettyJson: false })
     const compressedBlob = await FileUtils.compressBlobWithGzip(blob)
@@ -54,6 +68,8 @@ function useDB() {
   }
 
   return {
+    getAppState,
+    patchAppState,
     exportData,
     importData,
   }

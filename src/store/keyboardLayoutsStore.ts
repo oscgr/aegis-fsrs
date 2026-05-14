@@ -1,22 +1,23 @@
 import type { KeyboardLayout } from '@/store/db.ts'
 import { deburr, trim } from 'es-toolkit'
-import { readonly, ref } from 'vue'
-import { db } from '@/store/db.ts'
+import { ref, shallowReadonly } from 'vue'
+import useDB, { db } from '@/store/db.ts'
 import 'dexie-export-import'
 
 const cachedCurrentKeyboardLayout = ref<KeyboardLayout>()
 
 function useKeyboardLayoutsStore() {
+  const { getAppState, patchAppState } = useDB()
   // --- My current layout
   const getCurrentKeyboardLayout = async() => {
-    const current = await db.appState.get('current-keyboard-layout-id')
+    const current = await getAppState('current-keyboard-layout-id')
     if (!current)
       return
-    cachedCurrentKeyboardLayout.value = await db.keyboardLayouts.get(current.value as number)
+    cachedCurrentKeyboardLayout.value = await db.keyboardLayouts.get(current as number)
   }
 
   const patchCurrentKeyboardLayout = async(id: number) => {
-    await db.appState.put({ key: 'current-keyboard-layout-id', value: id })
+    await patchAppState('current-keyboard-layout-id', id)
     cachedCurrentKeyboardLayout.value = await db.keyboardLayouts.get(id)
   }
 
@@ -77,7 +78,7 @@ function useKeyboardLayoutsStore() {
   }
 
   return {
-    currentKeyboardLayout: readonly(cachedCurrentKeyboardLayout),
+    currentKeyboardLayout: shallowReadonly(cachedCurrentKeyboardLayout),
     getCurrentKeyboardLayout,
     patchCurrentKeyboardLayout,
     searchKeyboardLayouts,

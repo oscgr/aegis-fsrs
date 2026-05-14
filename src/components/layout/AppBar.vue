@@ -101,7 +101,7 @@ import {
   mdiMoonWaningCrescent,
   mdiWeatherSunny,
 } from '@mdi/js'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay, useTheme } from 'vuetify/framework'
 import OptionsDialog from '@/components/layout/OptionsDialog.vue'
@@ -113,10 +113,6 @@ const optionsDialog = ref<InstanceType<typeof OptionsDialog>>()
 const theme = useTheme()
 const { mdAndUp, smAndDown } = useDisplay()
 const { exportData, importData } = useDB()
-const { getCurrentKeyboardLayout, currentKeyboardLayout } = useKeyboardLayoutsStore()
+const { currentKeyboardLayout } = useKeyboardLayoutsStore()
 const { t } = useI18n()
-
-onMounted(async() => {
-  await getCurrentKeyboardLayout()
-})
 </script>

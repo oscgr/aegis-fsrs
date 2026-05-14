@@ -48,7 +48,6 @@ const currentKeyboardLayout = computed({
   },
 })
 const open = async() => {
-  await getCurrentKeyboardLayout()
   keyboardLayouts.value = await searchKeyboardLayouts()
   dialog.value = true
 }
