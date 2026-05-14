@@ -1,15 +1,39 @@
+import type { KeyboardLayout } from '@/store/db.ts'
+import { deburr, trim } from 'es-toolkit'
+import { readonly, ref } from 'vue'
 import { db } from '@/store/db.ts'
 import 'dexie-export-import'
 
-interface KeyboardLayout {
-  id: number
-  name: string // display name
-  content: [string, string, string, string, string, string, string, string, string, string, string, string] // flattened 4x3 keys grid
-}
+const cachedCurrentKeyboardLayout = ref<KeyboardLayout>()
 
 function useKeyboardLayoutsStore() {
+  // --- My current layout
+  const getCurrentKeyboardLayout = async() => {
+    const current = await db.appState.get('current-keyboard-layout-id')
+    if (!current)
+      return
+    cachedCurrentKeyboardLayout.value = await db.keyboardLayouts.get(current.value as number)
+  }
+
+  const patchCurrentKeyboardLayout = async(id: number) => {
+    await db.appState.put({ key: 'current-keyboard-layout-id', value: id })
+    cachedCurrentKeyboardLayout.value = await db.keyboardLayouts.get(id)
+  }
+
+  // --- Search
+
+  const searchKeyboardLayouts = async(query?: string) => {
+    const q = deburr(trim(query || ''))
+    if (q !== '')
+      return db.keyboardLayouts.where({ name: q }).toArray()
+    else
+      return db.keyboardLayouts.toArray()
+  }
+
+  // --- CRUD
+
   const addKeyboardLayout = async(keyboardLayout: Omit<KeyboardLayout, 'id'>) => {
-    const createdKeyboardLayoutId = await db.keyboardLayouts.add(keyboardLayout)
+    const createdKeyboardLayoutId = await db.keyboardLayouts.add({ ...keyboardLayout, template: false })
     const createdKeyboardLayout = await db.keyboardLayouts.get(createdKeyboardLayoutId)
     if (!createdKeyboardLayout) {
       throw new Error('Not found')
@@ -53,6 +77,10 @@ function useKeyboardLayoutsStore() {
   }
 
   return {
+    currentKeyboardLayout: readonly(cachedCurrentKeyboardLayout),
+    getCurrentKeyboardLayout,
+    patchCurrentKeyboardLayout,
+    searchKeyboardLayouts,
     addKeyboardLayout,
     patchKeyboardName,
     patchKeyboardLayout,

@@ -14,6 +14,10 @@ const messages = {
     cancel: 'Cancel',
     toggleTheme: 'Toggle theme',
     linkToGithub: 'Link to source',
+    keyboardLayouts: {
+      menuOptionTitle: 'Change keyboard layout',
+      menuOptionSubtitle: 'Current layout: {0}',
+    },
     keyboardPlayground: {
       title: 'Playground',
     },
@@ -31,6 +35,10 @@ const messages = {
     cancel: 'Annuler',
     toggleTheme: 'Changer le thème',
     linkToGithub: 'Lien vers la source',
+    keyboardLayouts: {
+      menuOptionTitle: 'Changer de clavier',
+      menuOptionSubtitle: 'Clavier actuel : {0}',
+    },
     keyboardPlayground: {
       title: 'Playground',
     },

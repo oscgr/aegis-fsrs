@@ -1,11 +1,11 @@
 <template>
-  <v-container class="fill-height">
-    <v-row class="w-100 justify-center">
+  <v-container max-width="500px">
+    <v-row>
       <v-col cols="12">
         <v-card>
           <v-card-title v-text="t('keyboardPlayground.title')" />
           <v-card-text>
-            <v-row v-for="(keyboardRow, i) in chunk(KeyboardLayouts.AZERTY, 4)" :key="i">
+            <v-row v-for="(keyboardRow, i) in chunk(currentKeyboardLayout?.content || [], 4)" :key="i">
               <v-col
                 v-for="(keyboardKey) in keyboardRow"
                 :key="keyboardKey"
@@ -44,10 +44,11 @@ import { useI18n } from 'vue-i18n'
 import KeyboardPlaygroundBuildingHistoryCard from '@/components/playground/KeyboardPlaygroundBuildingHistoryCard.vue'
 import KeyboardPlaygroundKey from '@/components/playground/KeyboardPlaygroundKey.vue'
 import Buildings from '@/constants/buildings.ts'
-import { KeyboardLayouts } from '@/constants/keyboards.ts'
+import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 
 const { t } = useI18n()
 const keys = useMagicKeys()
+const { currentKeyboardLayout } = useKeyboardLayoutsStore()
 const currentKey = ref<number | null>(null)
 const historyBuilding = ref<Building[]>([])
 
@@ -56,7 +57,7 @@ const emulateKeystroke = (key: string) => {
 }
 
 const keyStrokeHandler = (e: KeyboardEvent) => {
-  const keyPressed = KeyboardLayouts.AZERTY.indexOf(e.key)
+  const keyPressed = currentKeyboardLayout.value?.content.indexOf(e.key)
   if (!isNumber(keyPressed)) {
     console.warn('[keyboard-playground] key was not found in keyboard layout')
     return
@@ -75,5 +76,5 @@ const keyStrokeHandler = (e: KeyboardEvent) => {
   }
 }
 
-onKeyStroke(KeyboardLayouts.AZERTY, keyStrokeHandler, { passive: true, dedupe: true })
+onKeyStroke((currentKeyboardLayout.value?.content || []) as string[], keyStrokeHandler, { passive: true, dedupe: true })
 </script>

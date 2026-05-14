@@ -3,7 +3,6 @@
     <AppBar />
     <v-main>
       <KeyboardPlayground />
-      <!--          <Soundboard /> -->
       <VersionChecker />
     </v-main>
   </v-app>

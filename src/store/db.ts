@@ -1,22 +1,40 @@
 import type { EntityTable } from 'dexie'
 import { Dexie } from 'dexie'
-import FileUtils from '@/utils/fileUtils.ts'
+import { KeyboardLayouts } from '@/constants/keyboards.ts'
+import FileUtils from '@/utils/FileUtils.ts'
 import 'dexie-export-import'
 
-interface KeyboardLayout {
+export interface KeyboardLayout {
   id: number
   name: string // display name
+  template: boolean // templates cannot be deleted. They are standard keyboard layouts
   content: [string, string, string, string, string, string, string, string, string, string, string, string] // flattened 4x3 keys grid
 }
 
-const db = new Dexie('aegis') as Dexie & {
+export type AppState = {
+  key: 'current-keyboard-layout-id'
+  value: KeyboardLayout['id']
+} | {
+  key: 'theme-dark'
+  value: boolean
+}
+
+const db = new Dexie('aegis-fsrs') as Dexie & {
   keyboardLayouts: EntityTable<KeyboardLayout, 'id'>
+  appState: EntityTable<AppState, 'key'>
 }
 db.version(1).stores({
   keyboardLayouts: '++id,&name', // Primary key and indexed props
+  appState: 'key',
 })
 
-export type { KeyboardLayout }
+db.on('populate', async() => {
+  db.keyboardLayouts.bulkAdd(Object.entries(KeyboardLayouts).map(([name, content]) => ({ name, content, template: true })))
+  db.appState.bulkAdd([
+    // { key: 'theme-dark', value: window.matchMedia('(prefers-color-scheme: dark)') },
+    { key: 'current-keyboard-layout-id', value: 3 }, // todo
+  ])
+})
 export { db }
 
 // --- composable

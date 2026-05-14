@@ -1,48 +1,12 @@
 <template>
   <v-app-bar>
     <v-row no-gutters>
-      <v-col class="d-md-flex align-center justify-start pl-4 d-none" cols="3">
-        <!--        <v-slider -->
-        <!--          :key="`global-vol-slider-${mdAndUp ? 'not-mob' : 'mob'}`" -->
-        <!--          density="compact" -->
-        <!--          hide-details -->
-        <!--          :max="1" -->
-        <!--          :min="0" -->
-        <!--          :step="0.001" -->
-        <!--          :width="mdAndUp ? 180 : ''" -->
-        <!--        > -->
-        <!--          <template #prepend> -->
-        <!--            <v-btn -->
-        <!--              v-tooltip:left="{ openDelay: 200, text: t('globalMute') }" -->
-        <!--              :aria-label="t('globalMute')" -->
-        <!--              density="comfortable" -->
-        <!--              :icon="isGloballyMuted ? mdiVolumeOff : mdiVolumeHigh" -->
-        <!--              variant="text" -->
-        <!--              @click="toggleGlobalMute" -->
-        <!--            /> -->
-        <!--          </template> -->
-        <!--        </v-slider> -->
-      </v-col>
+      <v-col class="d-md-flex align-center justify-start pl-4 d-none" cols="3" />
       <v-col
         class="d-flex align-center"
         :class="{ 'justify-space-between': smAndDown, 'justify-center': mdAndUp }"
         :cols="mdAndUp ? 6 : 12"
       >
-        <!--        <v-tabs -->
-        <!--          v-model="tab" -->
-        <!--          align-tabs="center" -->
-        <!--          density="comfortable" -->
-        <!--          stacked -->
-        <!--        > -->
-        <!--          <v-tab> -->
-        <!--            <v-icon :icon="mdiSurroundSound" /> -->
-        <!--            <span v-text="t('soundboard')" /> -->
-        <!--          </v-tab> -->
-        <!--          <v-tab> -->
-        <!--            <v-icon :icon="mdiWifiStrength3" /> -->
-        <!--            <span v-text="t('motionDetector')" /> -->
-        <!--          </v-tab> -->
-        <!--        </v-tabs> -->
         <v-bottom-sheet
           :close-on-content-click="false"
           :disabled="mdAndUp"
@@ -71,6 +35,8 @@
               :title="t('linkToGithub')"
             />
             <v-divider />
+            <v-list-item :append-icon="mdiKeyboardSettings" :title="t('keyboardLayouts.menuOptionTitle')" :subtitle="t('keyboardLayouts.menuOptionSubtitle', [currentKeyboardLayout?.name])" />
+            <v-divider />
             <v-list-item :append-icon="mdiImport" :title="t('import')" @click="importData()" />
             <v-list-item :append-icon="mdiExport" :title="t('export')" @click="exportData()" />
           </v-list>
@@ -87,7 +53,7 @@
         <v-btn
           v-tooltip:left="{ openDelay: 200, text: t('linkToGithub') }"
           :aria-label="t('linkToGithub')"
-          href="https://github.com/oscgr/rpg-soundboard"
+          href="https://github.com/oscgr/aegis-fsrs"
           :icon="mdiGithub"
           target="_blank"
           variant="flat"
@@ -101,6 +67,8 @@
             />
           </template>
           <v-list density="compact">
+            <v-list-item :append-icon="mdiKeyboardSettings" :title="t('keyboardLayouts.menuOptionTitle')" :subtitle="t('keyboardLayouts.menuOptionSubtitle', [currentKeyboardLayout?.name])" />
+            <v-divider />
             <v-list-item :append-icon="mdiImport" :title="t('import')" @click="importData()" />
             <v-list-item :append-icon="mdiExport" :title="t('export')" @click="exportData()" />
           </v-list>
@@ -117,22 +85,24 @@ import {
   mdiExport,
   mdiGithub,
   mdiImport,
+  mdiKeyboardSettings,
   mdiMenu,
   mdiMoonWaningCrescent,
   mdiWeatherSunny,
 } from '@mdi/js'
-
-import { useToggle } from '@vueuse/core'
+import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay, useTheme } from 'vuetify/framework'
 import useDB from '@/store/db.ts'
+import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 
-const tab = defineModel()
 const theme = useTheme()
 const { mdAndUp, smAndDown } = useDisplay()
-const [isGloballyMuted, toggleGlobalMute] = useToggle()
-
+const { exportData, importData } = useDB()
+const { getCurrentKeyboardLayout, currentKeyboardLayout } = useKeyboardLayoutsStore()
 const { t } = useI18n()
 
-const { exportData, importData } = useDB()
+onMounted(async() => {
+  await getCurrentKeyboardLayout()
+})
 </script>
