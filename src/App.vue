@@ -3,7 +3,7 @@
     <AppBar />
     <v-main>
       <!-- :key to force re-render, because of keystroke listener -->
-      <KeyboardPlayground :key="currentKeyboardLayout?.id" />
+      <KeyboardPlayground :key="currentKeyboardLayout?.name" />
       <VersionChecker />
     </v-main>
   </v-app>

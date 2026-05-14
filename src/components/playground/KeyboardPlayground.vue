@@ -20,13 +20,12 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <v-card-actions>
-            <div class="d-flex flex-wrap ga-2">
-              <KeyboardPlaygroundBuildingHistoryCard
-                v-for="historyEntry in historyBuilding"
-                :key="historyEntry.name"
-                :history-entry="historyEntry"
-              />
+          <v-card-actions class="overflow-x-auto">
+            <div
+              v-for="historyEntry in historyBuilding"
+              :key="historyEntry.name"
+            >
+              <KeyboardPlaygroundBuildingHistoryCard :history-entry="historyEntry" />
             </div>
           </v-card-actions>
         </v-card>
@@ -54,10 +53,12 @@ const keyStrokeHandler = (keyIndex: number) => {
     currentKey.value = keyIndex
     return // First time pressing
   }
-  const selectedBuilding = buildings.value?.find(b => b.shortcut[0] === currentKey.value && b.shortcut[1] === keyIndex)
-  if (selectedBuilding) {
+  const selectedBuilding = buildings.value?.filter(b => b.shortcut1 === currentKey.value && b.shortcut2 === keyIndex)
+  if (selectedBuilding?.length > 1)
+    throw new Error('More than one building found for shortcut')
+  if (selectedBuilding[0]) {
     currentKey.value = null
-    historyBuilding.value.push(selectedBuilding)
+    historyBuilding.value.unshift(selectedBuilding[0])
   } else {
     currentKey.value = keyIndex
   }

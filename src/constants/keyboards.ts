@@ -1,7 +1,10 @@
-import type { KeyboardLayout } from '@/store/db.ts'
+export interface KeyboardLayout {
+  name: string // display name
+  content: [string, string, string, string, string, string, string, string, string, string, string, string] // flattened 4x3 keys grid
+}
 
-export const KeyboardLayouts = {
-  QWERTY: [
+export const KeyboardLayouts = [
+  { name: 'QWERTY', content: [
     'q',
     'w',
     'e',
@@ -14,8 +17,8 @@ export const KeyboardLayouts = {
     'x',
     'c',
     'v',
-  ],
-  QWERTZ: [
+  ] },
+  { name: 'QWERTZ', content: [
     'q',
     'w',
     'e',
@@ -28,8 +31,8 @@ export const KeyboardLayouts = {
     'x',
     'c',
     'v',
-  ],
-  AZERTY: [
+  ] },
+  { name: 'AZERTY', content: [
     'a',
     'z',
     'e',
@@ -42,8 +45,8 @@ export const KeyboardLayouts = {
     'x',
     'c',
     'v',
-  ],
-  DVORAK: [
+  ] },
+  { name: 'DVORAK', content: [
     '\'',
     ',',
     '.',
@@ -56,5 +59,5 @@ export const KeyboardLayouts = {
     'q',
     'j',
     'k',
-  ],
-} satisfies Record<string, KeyboardLayout['content']>
+  ] },
+] satisfies KeyboardLayout[]

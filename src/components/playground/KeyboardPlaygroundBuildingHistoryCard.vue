@@ -2,6 +2,8 @@
   <v-card
     class="d-flex align-center flex-column"
     variant="tonal"
+    width="120px"
+    height="140px"
     density="compact"
   >
     <v-card-text class="d-flex flex-column align-center">
@@ -11,16 +13,10 @@
         transition="none"
         :src="historyEntry.icon"
       />
-      <!--      <v-img -->
-      <!--        aspect-ratio="1" -->
-      <!--        width="66px" -->
-      <!--        transition="none" -->
-      <!--        :src="`@/assets/icons/flags/${props.historyEntry.group.toLowerCase()}.png`" -->
-      <!--      /> -->
-      <div class="text-body-small" v-text="historyEntry.name" />
+      <div class="text-body-small text-no-wrap" v-text="historyEntry.name" />
       <v-hotkey
         color="primary"
-        :keys="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])"
+        :keys="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut1, historyEntry.shortcut2, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])"
         variant="elevated"
         platform="mac"
       />
@@ -30,7 +26,7 @@
 
 <script setup lang="ts">
 import type { Building } from '@/constants/buildings.ts'
-import type { KeyboardLayout } from '@/store/db.ts'
+import type { KeyboardLayout } from '@/constants/keyboards.ts'
 import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 import BuildingUtils from '@/utils/BuildingUtils.ts'
 

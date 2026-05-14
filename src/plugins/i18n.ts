@@ -15,6 +15,9 @@ const messages = {
     toggleTheme: 'Toggle theme',
     linkToGithub: 'Link to source',
     options: {
+      civ: {
+        title: 'Civ',
+      },
       keyboardLayout: {
         title: 'Keyboard layout',
       },
@@ -40,6 +43,9 @@ const messages = {
     toggleTheme: 'Changer le thème',
     linkToGithub: 'Lien vers la source',
     options: {
+      civ: {
+        title: 'Civ',
+      },
       keyboardLayout: {
         title: 'Clavier',
       },

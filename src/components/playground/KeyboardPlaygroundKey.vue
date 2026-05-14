@@ -47,14 +47,14 @@ const keyboardKey = computed(() => currentKeyboardLayout.value?.content[props.in
 
 const comboExists = computed(() => {
   if (!isNumber(props.current)) // Nothing is pressed
-    return buildings.value?.some(b => b.shortcut[0] === props.index)
-  else if (buildings.value?.every(b => b.shortcut[0] !== props.current)) // Pressed a key that could not lead to a building shortcut
-    return buildings.value?.some(b => b.shortcut[0] === props.index)
-  return buildings.value?.some(b => b.shortcut[0] === props.current && b.shortcut[1] === props.index)
+    return buildings.value?.some(b => b.shortcut1 === props.index)
+  else if (buildings.value?.every(b => b.shortcut1 !== props.current)) // Pressed a key that could not lead to a building shortcut
+    return buildings.value?.some(b => b.shortcut1 === props.index)
+  return buildings.value?.some(b => b.shortcut1 === props.current && b.shortcut2 === props.index)
 })
 
 const badgeContent = computed(() => {
-  const building = buildings.value?.find(b => b.shortcut[0] === props.current && b.shortcut[1] === props.index)
+  const building = buildings.value?.find(b => b.shortcut1 === props.current && b.shortcut2 === props.index)
   if (building)
     return building.name.split(' ').map(v => v[0]).join('').toUpperCase()
   switch (props.index) {

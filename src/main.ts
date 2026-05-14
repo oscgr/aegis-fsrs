@@ -15,7 +15,7 @@ import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 import App from './App.vue'
 
 const { getCurrentKeyboardLayout } = useKeyboardLayoutsStore()
-const { getCurrentBuildingCivGroup, getCivGroupBuildings } = useBuildingsStore()
+const { getCurrentBuildingCivGroup } = useBuildingsStore()
 
 const app = createApp(App)
 
@@ -24,6 +24,4 @@ registerPlugins(app)
 app.mount('#app')
 
 // todo use pinia
-Promise.all([getCurrentKeyboardLayout(), getCurrentBuildingCivGroup()]).then(() => {
-  getCivGroupBuildings()
-})
+Promise.all([getCurrentKeyboardLayout(), getCurrentBuildingCivGroup()])

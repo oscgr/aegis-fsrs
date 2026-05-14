@@ -4,6 +4,7 @@ import useDB from '@/store/db.ts'
 import BuildingUtils from '@/utils/BuildingUtils.ts'
 import 'dexie-export-import'
 
+// todo - use pinia
 const cachedCivGroup = ref<BuildingCivGroup>()
 const cachedBuildings = ref<Building[]>([])
 
@@ -15,25 +16,20 @@ function useBuildingsStore() {
     if (!civGroup)
       return
     cachedCivGroup.value = civGroup as BuildingCivGroup
-  }
-
-  const getCivGroupBuildings = async() => {
-    if (!cachedCivGroup.value)
-      throw new Error('CivGroup not set')
     cachedBuildings.value = BuildingUtils.getCivGroupBuildings(cachedCivGroup.value)
   }
 
   const patchCurrentBuildingCivGroup = async(buildingCivGroup: BuildingCivGroup) => {
     await patchAppState('current-civ-group', buildingCivGroup)
     cachedCivGroup.value = buildingCivGroup
+    cachedBuildings.value = BuildingUtils.getCivGroupBuildings(buildingCivGroup)
   }
 
   return {
-    buildingCivGroup: shallowReadonly(cachedCivGroup),
+    currentBuildingCivGroup: shallowReadonly(cachedCivGroup),
     buildings: shallowReadonly(cachedBuildings),
     getCurrentBuildingCivGroup,
     patchCurrentBuildingCivGroup,
-    getCivGroupBuildings,
   }
 }
 
