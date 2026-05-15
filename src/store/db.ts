@@ -20,7 +20,6 @@ const db = new Dexie('aegis-fsrs') as Dexie & {
   appState: EntityTable<AppState, 'key'>
 }
 db.version(1).stores({
-  keyboardLayouts: '++id,&name', // Primary key and indexed props
   appState: 'key',
 })
 

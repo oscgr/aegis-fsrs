@@ -9,7 +9,7 @@ const useBuildingsStore = defineStore('buildings', () => {
   const cachedCivGroup = ref<BuildingCivGroup>()
   const cachedBuildings = ref<Building[]>([])
 
-  const getCurrentBuildingCivGroup = async() => {
+  const cacheCurrentCivGroupAndBuildings = async() => {
     const civGroup = await getAppState('current-civ-group')
     if (!civGroup)
       return
@@ -26,7 +26,7 @@ const useBuildingsStore = defineStore('buildings', () => {
   return {
     currentBuildingCivGroup: computed(() => cachedCivGroup.value),
     buildings: computed(() => cachedBuildings.value),
-    getCurrentBuildingCivGroup,
+    cacheCurrentCivGroupAndBuildings,
     patchCurrentBuildingCivGroup,
   }
 })
