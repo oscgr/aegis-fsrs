@@ -16,7 +16,7 @@ const messages = {
     linkToGithub: 'Link to source',
     options: {
       civ: {
-        title: 'Faction',
+        title: 'Civilization',
       },
       keyboardLayout: {
         title: 'Keyboard layout',
@@ -44,7 +44,7 @@ const messages = {
     linkToGithub: 'Lien vers la source',
     options: {
       civ: {
-        title: 'Faction',
+        title: 'Civilisation',
       },
       keyboardLayout: {
         title: 'Clavier',
