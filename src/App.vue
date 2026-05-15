@@ -21,7 +21,7 @@ const keyboardLayoutsStore = useKeyboardLayoutsStore()
 const buildingsStore = useBuildingsStore()
 
 onMounted(() => {
-  Promise.all([keyboardLayoutsStore.getCurrentKeyboardLayout(), buildingsStore.getCurrentBuildingCivGroup()])
+  Promise.all([keyboardLayoutsStore.cacheCurrentKeyboardLayout(), buildingsStore.cacheCurrentCivGroupAndBuildings()])
 })
 </script>
 
