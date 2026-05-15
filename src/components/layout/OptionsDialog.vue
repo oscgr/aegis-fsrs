@@ -61,22 +61,22 @@ const { t } = useI18n()
 const keyboardLayouts = computed(() => KeyboardLayouts) // todo - include custom
 const { smAndDown } = useDisplay()
 
-const { currentKeyboardLayout: _currentKeyboardLayout, patchCurrentKeyboardLayout } = useKeyboardLayoutsStore()
-const { currentBuildingCivGroup: _currentBuildingCivGroup, patchCurrentBuildingCivGroup } = useBuildingsStore()
+const keyboardLayoutsStore = useKeyboardLayoutsStore()
+const buildingsStore = useBuildingsStore()
 
 const currentKeyboardLayout = computed({
-  get: () => _currentKeyboardLayout.value?.name,
+  get: () => keyboardLayoutsStore.currentKeyboardLayout?.name,
   set: (v) => {
     if (v)
-      patchCurrentKeyboardLayout(v)
+      keyboardLayoutsStore.patchCurrentKeyboardLayout(v)
   },
 })
 
 const currentBuildingCivGroup = computed({
-  get: () => _currentBuildingCivGroup.value,
+  get: () => buildingsStore.currentBuildingCivGroup,
   set: (v) => {
     if (v)
-      patchCurrentBuildingCivGroup(v)
+      buildingsStore.patchCurrentBuildingCivGroup(v)
   },
 })
 

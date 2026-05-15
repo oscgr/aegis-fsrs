@@ -1,12 +1,10 @@
+import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { KeyboardLayouts } from '@/constants/keyboards.ts'
 import useDB from '@/store/db.ts'
-import 'dexie-export-import'
 
-// todo - use pinia
-const cachedCurrentKeyboardLayoutName = ref<string>()
-
-function useKeyboardLayoutsStore() {
+const useKeyboardLayoutsStore = defineStore('keyboards', () => {
+  const cachedCurrentKeyboardLayoutName = ref<string>()
   const { getAppState, patchAppState } = useDB()
   // --- My current layout
   const getCurrentKeyboardLayout = async() => {
@@ -26,6 +24,6 @@ function useKeyboardLayoutsStore() {
     getCurrentKeyboardLayout,
     patchCurrentKeyboardLayout,
   }
-}
+})
 
 export default useKeyboardLayoutsStore

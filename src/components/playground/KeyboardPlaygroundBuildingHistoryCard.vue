@@ -16,7 +16,7 @@
       <div class="text-body-small text-no-wrap" v-text="historyEntry.name" />
       <v-hotkey
         color="primary"
-        :keys="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut1, historyEntry.shortcut2, (currentKeyboardLayout?.content || []) as KeyboardLayout['content'])"
+        :keys="BuildingUtils.convertBuildingShortcutCodeToLayout(historyEntry.shortcut1, historyEntry.shortcut2, (store.currentKeyboardLayout?.content || []) as KeyboardLayout['content'])"
         variant="elevated"
         platform="mac"
       />
@@ -31,5 +31,5 @@ import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 import BuildingUtils from '@/utils/BuildingUtils.ts'
 
 defineProps<{ historyEntry: Building }>()
-const { currentKeyboardLayout } = useKeyboardLayoutsStore()
+const store = useKeyboardLayoutsStore()
 </script>

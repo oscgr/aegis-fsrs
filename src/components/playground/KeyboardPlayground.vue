@@ -44,7 +44,7 @@ import KeyboardPlaygroundKey from '@/components/playground/KeyboardPlaygroundKey
 import useBuildingsStore from '@/store/buildingsStore.ts'
 
 const { t } = useI18n()
-const { buildings } = useBuildingsStore()
+const store = useBuildingsStore()
 const currentKey = ref<number | null>(null)
 const historyBuilding = ref<Readonly<Building>[]>([])
 
@@ -53,7 +53,7 @@ const keyStrokeHandler = (keyIndex: number) => {
     currentKey.value = keyIndex
     return // First time pressing
   }
-  const selectedBuilding = buildings.value?.filter(b => b.shortcut1 === currentKey.value && b.shortcut2 === keyIndex)
+  const selectedBuilding = store.buildings.filter(b => b.shortcut1 === currentKey.value && b.shortcut2 === keyIndex)
   if (selectedBuilding?.length > 1)
     throw new Error('More than one building found for shortcut')
   if (selectedBuilding[0]) {

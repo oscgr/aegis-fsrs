@@ -33,7 +33,7 @@
             <v-list-item
               :append-icon="mdiKeyboardSettings"
               :title="t('options.menuTitle')"
-              :subtitle="t('options.menuSubtitle', [currentKeyboardLayout?.name])"
+              :subtitle="t('options.menuSubtitle', [store.currentKeyboardLayout?.name])"
               @click="optionsDialog?.open()"
             />
             <v-divider />
@@ -63,7 +63,7 @@
             <v-list-item
               :append-icon="mdiKeyboardSettings"
               :title="t('options.menuTitle')"
-              :subtitle="t('options.menuSubtitle', [currentKeyboardLayout?.name])"
+              :subtitle="t('options.menuSubtitle', [store.currentKeyboardLayout?.name])"
               @click="optionsDialog?.open()"
             />
             <v-divider />
@@ -98,6 +98,6 @@ const optionsDialog = ref<InstanceType<typeof OptionsDialog>>()
 
 const { mdAndUp, smAndDown } = useDisplay()
 const { exportData, importData } = useDB()
-const { currentKeyboardLayout } = useKeyboardLayoutsStore()
+const store = useKeyboardLayoutsStore()
 const { t } = useI18n()
 </script>

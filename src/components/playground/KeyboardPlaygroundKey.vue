@@ -40,21 +40,21 @@ import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 const props = defineProps<{ index: number, current: number | null }>()
 const emits = defineEmits<{ (e: 'keyStroke', index: number): void }>()
 const keys = useMagicKeys()
-const { currentKeyboardLayout } = useKeyboardLayoutsStore()
-const { buildings } = useBuildingsStore()
+const keyboardLayoutsStore = useKeyboardLayoutsStore()
+const buildingsStore = useBuildingsStore()
 
-const keyboardKey = computed(() => currentKeyboardLayout.value?.content[props.index] || '')
+const keyboardKey = computed(() => keyboardLayoutsStore.currentKeyboardLayout?.content[props.index] || '')
 
 const comboExists = computed(() => {
   if (!isNumber(props.current)) // Nothing is pressed
-    return buildings.value?.some(b => b.shortcut1 === props.index)
-  else if (buildings.value?.every(b => b.shortcut1 !== props.current)) // Pressed a key that could not lead to a building shortcut
-    return buildings.value?.some(b => b.shortcut1 === props.index)
-  return buildings.value?.some(b => b.shortcut1 === props.current && b.shortcut2 === props.index)
+    return buildingsStore.buildings.some(b => b.shortcut1 === props.index)
+  else if (buildingsStore.buildings.every(b => b.shortcut1 !== props.current)) // Pressed a key that could not lead to a building shortcut
+    return buildingsStore.buildings.some(b => b.shortcut1 === props.index)
+  return buildingsStore.buildings.some(b => b.shortcut1 === props.current && b.shortcut2 === props.index)
 })
 
 const badgeContent = computed(() => {
-  const building = buildings.value?.find(b => b.shortcut1 === props.current && b.shortcut2 === props.index)
+  const building = buildingsStore.buildings.find(b => b.shortcut1 === props.current && b.shortcut2 === props.index)
   if (building)
     return building.name.split(' ').map(v => v[0]).join('').toUpperCase()
   switch (props.index) {

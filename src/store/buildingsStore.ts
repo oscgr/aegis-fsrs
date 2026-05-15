@@ -1,16 +1,14 @@
 import type { Building, BuildingCivGroup } from '@/constants/buildings.ts'
-import { ref, shallowReadonly } from 'vue'
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 import useDB from '@/store/db.ts'
 import BuildingUtils from '@/utils/BuildingUtils.ts'
-import 'dexie-export-import'
 
-// todo - use pinia
-const cachedCivGroup = ref<BuildingCivGroup>()
-const cachedBuildings = ref<Building[]>([])
-
-function useBuildingsStore() {
+const useBuildingsStore = defineStore('buildings', () => {
   const { getAppState, patchAppState } = useDB()
-  // --- My current layout
+  const cachedCivGroup = ref<BuildingCivGroup>()
+  const cachedBuildings = ref<Building[]>([])
+
   const getCurrentBuildingCivGroup = async() => {
     const civGroup = await getAppState('current-civ-group')
     if (!civGroup)
@@ -26,11 +24,11 @@ function useBuildingsStore() {
   }
 
   return {
-    currentBuildingCivGroup: shallowReadonly(cachedCivGroup),
-    buildings: shallowReadonly(cachedBuildings),
+    currentBuildingCivGroup: computed(() => cachedCivGroup.value),
+    buildings: computed(() => cachedBuildings.value),
     getCurrentBuildingCivGroup,
     patchCurrentBuildingCivGroup,
   }
-}
+})
 
 export default useBuildingsStore
