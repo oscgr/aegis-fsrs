@@ -1,27 +1,28 @@
 <template>
   <v-dialog v-model="dialog" max-width="900px" :fullscreen="smAndDown">
     <v-card>
-      <v-toolbar color="primary" density="compact">
+      <v-toolbar color="surface" density="compact">
         <v-toolbar-title :text="t('options.title')" />
         <v-spacer />
         <v-btn :icon="mdiClose" variant="text" @click="dialog = false" />
       </v-toolbar>
       <v-card-text>
-        <v-card variant="tonal">
-          <v-card-title v-text="t('options.keyboardLayout.title')" />
+        <v-card variant="text">
+          <v-card-title class="text-body-large" v-text="t('options.keyboardLayout.title')" />
           <v-card-text>
             <v-btn-toggle v-model="currentKeyboardLayout" density="compact" variant="tonal">
               <v-btn
-                v-for="layout in keyboardLayouts"
+                v-for="layout in [...keyboardLayouts, { name: 'Custom (coming soon)' }]"
                 :key="layout.name"
                 :value="layout.name"
+                :disabled="layout.name === 'Custom (coming soon)'"
                 :text="layout.name"
               />
             </v-btn-toggle>
           </v-card-text>
         </v-card>
-        <v-card variant="tonal" class="mt-4">
-          <v-card-title v-text="t('options.civ.title')" />
+        <v-card variant="text" class="mt-4">
+          <v-card-title class="text-body-large" v-text="t('options.civ.title')" />
           <v-card-text>
             <v-btn-toggle v-model="currentBuildingCivGroup" variant="tonal" density="compact">
               <v-btn
@@ -58,11 +59,11 @@ import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 const dialog = ref(false)
 
 const { t } = useI18n()
-const keyboardLayouts = computed(() => KeyboardLayouts) // todo - include custom
-const { smAndDown } = useDisplay()
-
 const keyboardLayoutsStore = useKeyboardLayoutsStore()
 const buildingsStore = useBuildingsStore()
+
+const keyboardLayouts = computed(() => KeyboardLayouts) // todo - include custom
+const { smAndDown } = useDisplay()
 
 const currentKeyboardLayout = computed({
   get: () => keyboardLayoutsStore.currentKeyboardLayout?.name,
