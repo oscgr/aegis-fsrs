@@ -30,13 +30,6 @@
               :title="t('linkToGithub')"
             />
             <v-divider />
-            <v-list-item
-              :append-icon="mdiKeyboardSettings"
-              :title="t('options.menuTitle')"
-              :subtitle="t('options.menuSubtitle', [store.currentKeyboardLayout?.name])"
-              @click="optionsDialog?.open()"
-            />
-            <v-divider />
             <v-list-item :append-icon="mdiImport" :title="t('import')" @click="importData()" />
             <v-list-item :append-icon="mdiExport" :title="t('export')" @click="exportData()" />
           </v-list>
@@ -60,19 +53,11 @@
             />
           </template>
           <v-list density="compact">
-            <v-list-item
-              :append-icon="mdiKeyboardSettings"
-              :title="t('options.menuTitle')"
-              :subtitle="t('options.menuSubtitle', [store.currentKeyboardLayout?.name])"
-              @click="optionsDialog?.open()"
-            />
-            <v-divider />
             <v-list-item :append-icon="mdiImport" :title="t('import')" @click="importData()" />
             <v-list-item :append-icon="mdiExport" :title="t('export')" @click="exportData()" />
           </v-list>
         </v-menu>
       </v-col>
-      <OptionsDialog ref="optionsDialog" />
     </v-row>
   </v-app-bar>
 </template>
@@ -84,20 +69,13 @@ import {
   mdiExport,
   mdiGithub,
   mdiImport,
-  mdiKeyboardSettings,
   mdiMenu,
 } from '@mdi/js'
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify/framework'
-import OptionsDialog from '@/components/layout/OptionsDialog.vue'
 import useDB from '@/store/db.ts'
-import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
-
-const optionsDialog = ref<InstanceType<typeof OptionsDialog>>()
 
 const { mdAndUp, smAndDown } = useDisplay()
 const { exportData, importData } = useDB()
-const store = useKeyboardLayoutsStore()
 const { t } = useI18n()
 </script>

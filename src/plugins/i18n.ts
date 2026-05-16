@@ -21,9 +21,6 @@ const messages = {
       keyboardLayout: {
         title: 'Keyboard layout',
       },
-      title: 'Options',
-      menuTitle: 'Options...',
-      menuSubtitle: 'Current layout: {0}',
     },
     keyboardPlayground: {
       title: 'Playground',
@@ -49,9 +46,6 @@ const messages = {
       keyboardLayout: {
         title: 'Clavier',
       },
-      menuTitle: 'Options...',
-      title: 'Options',
-      menuSubtitle: 'Clavier actuel : {0}',
     },
     keyboardPlayground: {
       title: 'Playground',

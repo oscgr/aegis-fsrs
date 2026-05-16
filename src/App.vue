@@ -2,8 +2,13 @@
   <v-app>
     <AppBar />
     <v-main>
-      <!-- :key to force re-render, because of keystroke listener -->
-      <KeyboardPlayground :key="keyboardLayoutsStore.currentKeyboardLayout?.name" />
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <router-view />
+          </v-col>
+        </v-row>
+      </v-container>
       <VersionChecker />
     </v-main>
   </v-app>
@@ -13,15 +18,14 @@
 import { onMounted } from 'vue'
 import AppBar from '@/components/layout/AppBar.vue'
 import VersionChecker from '@/components/layout/VersionChecker.vue'
-import KeyboardPlayground from '@/components/playground/KeyboardPlayground.vue'
 import useBuildingsStore from '@/store/buildingsStore.ts'
 import useKeyboardLayoutsStore from '@/store/keyboardLayoutsStore.ts'
 
 const keyboardLayoutsStore = useKeyboardLayoutsStore()
 const buildingsStore = useBuildingsStore()
 
-onMounted(() => {
-  Promise.all([keyboardLayoutsStore.cacheCurrentKeyboardLayout(), buildingsStore.cacheCurrentCivGroupAndBuildings()])
+onMounted(async() => {
+  await Promise.all([keyboardLayoutsStore.cacheCurrentKeyboardLayout(), buildingsStore.cacheCurrentCivGroupAndBuildings()])
 })
 </script>
 

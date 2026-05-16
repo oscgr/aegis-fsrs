@@ -24,9 +24,8 @@ db.version(1).stores({
 })
 
 db.on('populate', async() => {
-  // db.keyboardLayouts.bulkAdd(Object.entries(KeyboardLayouts).map(([name, content]) => ({ name, content, template: true })))
   db.appState.bulkAdd([
-    { key: 'current-keyboard-layout', value: 'QWERTY' }, // todo - ask usr on first connection
+    { key: 'current-keyboard-layout', value: 'QWERTY' },
     { key: 'current-civ-group', value: BuildingCivGroup.COMMON },
   ])
 })
